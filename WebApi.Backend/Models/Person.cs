@@ -13,6 +13,7 @@ namespace WebApi.Backend.Models
         [Key]
         [Required]
         [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [Column("firstname")]
