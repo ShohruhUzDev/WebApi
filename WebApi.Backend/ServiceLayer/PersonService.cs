@@ -4,33 +4,67 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Backend.Models;
+using System.Collections;
 
 namespace WebApi.Backend.ServiceLayer
 {
-    public class PersonService : IPersonService
+    public class PersonService : IRepository<Person, int>
     {
         private readonly DataConext _datacontext;
         public PersonService(DataConext dataConext)
         {
             this._datacontext = dataConext;
         }
-        public Person Get(int id)
-        {
-           var person= _datacontext.Persons.FirstOrDefault(i => i.Id == id);
 
-            return person;
+        public async Task<Person> Create(Person entity)
+        {
+            await _datacontext.Persons.AddAsync(entity);
+            return entity;
         }
 
-        public IEnumerable<Person> GetAll()
+        public async Task Delete(int id)
         {
-            var persons = _datacontext.Persons.ToList();
+            var person1 = await _datacontext.Persons.FirstOrDefaultAsync(i => i.Id == id);
+            if (person1 != null)
+            {
+                _datacontext.Persons.Remove(person1);
+                _datacontext.SaveChanges();
+            }
+        }
+
+
+        public async Task< IEnumerable<Person>> GetAll()
+        {
+            var persons = await _datacontext.Persons.ToListAsync();
             return persons;
         }
 
-        public Person GetPersonWithCar(int id)
+        public async Task<Person> GetById(int id)
         {
-            var person = _datacontext.Persons.Include(i => i.Cars).FirstOrDefault(j => j.Id == id);
+            var person = await _datacontext.Persons.FirstOrDefaultAsync(i => i.Id == id);
+
             return person;
         }
+
+        public async Task Update(Person entity)
+        {
+            var person = await _datacontext.Persons.FirstOrDefaultAsync(i => i.Id == entity.Id);
+            if (person != null)
+            {
+                _datacontext.Entry(entity).State = EntityState.Modified;
+                _datacontext.SaveChanges();
+            };
+        }
+
+
+        //public async Task<PersonWithCars> GetPersonWithCar(int id)
+        //{
+        //    var person = await _datacontext.Persons.Include(i => i.Cars);
+        //    var person = await _datacontext.Persons.Include(i => i.Cars);
+        //    PersonWithCars personWithCars = new PersonWithCars();
+        //    personWithCars.FullName = person.Person.FirstName + " " + person.Person.LastName;
+        //    personWithCars.Cars = person.Person.Cars;
+        //    return personWithCars;
+        //}
     }
 }

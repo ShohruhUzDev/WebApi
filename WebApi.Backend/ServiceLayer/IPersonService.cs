@@ -6,10 +6,10 @@ using WebApi.Backend.Models;
 
 namespace WebApi.Backend.ServiceLayer
 {
-    interface IPersonService
+    public interface IPersonService
     {
-        Person Get(int id);
-        IEnumerable<Person> GetAll();
-        Person GetPersonWithCar(int id);
+        Task<Person> Get(int id);
+       Task< IEnumerable<Person>> GetAll();
+      // Task< PersonWithCars> GetPersonWithCar(int id);
     }
 }

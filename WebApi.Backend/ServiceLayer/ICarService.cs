@@ -6,10 +6,13 @@ using WebApi.Backend.Models;
 
 namespace WebApi.Backend.ServiceLayer
 {
-    interface ICarService
+   public interface ICarService
     {
-        Car Get(int id);
-        IEnumerable<Car> GetAll();
+        Task< Car> Get(int id);
+       Task< IEnumerable<Car>> GetAll();
+        void Update(Car car);
+        void Delete(int id);
+        Task<Car> Create(Car car);
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +7,7 @@ using WebApi.Backend.Models;
 
 namespace WebApi.Backend.ServiceLayer
 {
-    public class CarService : ICarService
+    public class CarService : IRepository<Car, int>
     {
         private DataConext _dataContext;
 
@@ -14,16 +15,56 @@ namespace WebApi.Backend.ServiceLayer
         {
             _dataContext = dataConext;
         }
-        public Car Get(int id)
+
+        public async Task<Car> Create(Car car)
         {
-            return _dataContext.Cars.FirstOrDefault(i => i.Id == id);
+            var sbk=await _dataContext.Cars.AddAsync(car);
+            _dataContext.SaveChanges();
+            return sbk.Entity;
+
+            
+        }
+        
+
+
+
+        public async Task< IEnumerable<Car>> GetAll()
+        {
+            var cars = await _dataContext.Cars.ToListAsync();
+            return cars;
+        }
+
+        public async Task<Car> GetById(int id)
+        {
+            return await _dataContext.Cars.FirstOrDefaultAsync(i => i.Id == id);
 
         }
 
-        public IEnumerable<Car> GetAll()
+      
+        public async Task Delete(int id)
         {
-            var cars = _dataContext.Cars.ToList();
-            return cars;
+            var car1 =  await _dataContext.Cars.FirstOrDefaultAsync(i => i.Id == id);
+            if (car1 != null)
+            {
+                _dataContext.Cars.Remove(car1);
+                _dataContext.SaveChanges();
+            }
+         
+
+
+        }
+
+    
+
+        async Task IRepository<Car, int>.Update(Car entity)
+        {
+            var car = await _dataContext.Cars.FirstOrDefaultAsync(i => i.Id == entity.Id);
+            if (car != null)
+            {
+                _dataContext.Entry(entity).State = EntityState.Modified;
+                _dataContext.SaveChanges();
+            }
+            
         }
     }
 }

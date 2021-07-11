@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Backend.Models;
+using WebApi.Backend.ServiceLayer;
 
 namespace WebApi.Backend
 {
@@ -28,8 +29,10 @@ namespace WebApi.Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddControllers();
+
+            services.AddScoped<ICarService, CarService>();
+            services.AddScoped<IPersonService, PersonService>();
 
             services.AddDbContext<DataConext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
