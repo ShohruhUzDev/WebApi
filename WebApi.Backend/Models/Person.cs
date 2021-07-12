@@ -10,10 +10,8 @@ namespace WebApi.Backend.Models
     [Table("person")]
     public class Person
     {
-        [Key]
         [Required]
         [Column("id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [Column("firstname")]
@@ -21,7 +19,7 @@ namespace WebApi.Backend.Models
        [MaxLength(20)]
         public string  FirstName { get; set; }
 
-        [Column("lasttname")]
+        [Column("lastname")]
         [Required]
         [MaxLength(20)]
         public string LastName { get; set; }
@@ -31,7 +29,6 @@ namespace WebApi.Backend.Models
        
         public string Phone { get; set; }
 
-        public List<Car> Cars { get; set; }
-
+      
     }
 }

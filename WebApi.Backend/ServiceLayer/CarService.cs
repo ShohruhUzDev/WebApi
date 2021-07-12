@@ -66,5 +66,11 @@ namespace WebApi.Backend.ServiceLayer
             }
             
         }
+
+        public async Task<bool> Exist(int id)
+        {
+            return await _dataContext.Cars.AnyAsync(e => e.Id == id);
+
+        }
     }
 }

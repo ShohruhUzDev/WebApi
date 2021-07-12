@@ -56,15 +56,24 @@ namespace WebApi.Backend.ServiceLayer
             };
         }
 
-
-        //public async Task<PersonWithCars> GetPersonWithCar(int id)
-        //{
-        //    var person = await _datacontext.Persons.Include(i => i.Cars);
-        //    var person = await _datacontext.Persons.Include(i => i.Cars);
-        //    PersonWithCars personWithCars = new PersonWithCars();
-        //    personWithCars.FullName = person.Person.FirstName + " " + person.Person.LastName;
-        //    personWithCars.Cars = person.Person.Cars;
-        //    return personWithCars;
-        //}
+        
+        public async Task<bool> Exist(int id)
+        {
+            return await _datacontext.Persons.AnyAsync(e => e.Id == id);
+        }
+        ////public async Task<PersonWithCars> GetPersonWithCar(int id)
+        ////{
+        ////    var car = _datacontext.Cars.Include(i=>i.PersonId)
+        ////        //(car, person) =>
+        ////        //new PersonWithCars
+        ////        //{
+        ////        //    FullName = person.FirstName + " " + person.LastName,
+        ////        //    CarName = car.Name
+        ////        //}
+        ////        );
+        ////    var newperson= from i in car
+        ////                   where i.
+        ////    return car;
+        ////}
     }
 }

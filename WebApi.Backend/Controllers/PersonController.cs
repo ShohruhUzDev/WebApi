@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Backend.Models;
 using WebApi.Backend.ServiceLayer;
 
 namespace WebApi.Backend.Controllers
@@ -12,9 +13,9 @@ namespace WebApi.Backend.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        private IPersonService _personService;
+        private IRepository<Person, int> _personService;
 
-        public PersonController(IPersonService personService)
+        public PersonController(IRepository<Person, int> personService)
         {
             _personService = personService;
         }
@@ -23,7 +24,7 @@ namespace WebApi.Backend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var person = await _personService.Get(id);
+            var person = await _personService.GetById(id);
             return Ok(person);
         }
 
@@ -34,12 +35,12 @@ namespace WebApi.Backend.Controllers
             return Ok(persons);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetPersonWihCar(int id)
-        {
-            var personwithcar = await _personService.GetPersonWithCar(id);
-            return Ok(personwithcar);
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> GetPersonWihCar(int id)
+        //{
+        //    var personwithcar = await _personService.GetPersonWithCar(id);
+        //    return Ok(personwithcar);
+        //}
 
 
 
