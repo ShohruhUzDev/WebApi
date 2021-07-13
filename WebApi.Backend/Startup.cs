@@ -32,7 +32,8 @@ namespace WebApi.Backend
             services.AddControllers();
 
             services.AddScoped<IRepository<Car, int>, CarService>();
-            services.AddScoped<IRepository<Person, int>, PersonService>();
+            //services.AddScoped<IRepository<Person, int>, PersonService>();
+            services.AddScoped<IPersonService, PersonService>();
 
             services.AddDbContext<DataConext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));

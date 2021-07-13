@@ -12,7 +12,7 @@ namespace WebApi.Backend.ServiceLayer
         Task<T1> Create(T1 entity);
         Task Delete(T2 id);
         Task Update(T1 entity);
-        Task<bool> Exist(T2 id);
+      //  bool Exist(T2 id);
 
     }
 }

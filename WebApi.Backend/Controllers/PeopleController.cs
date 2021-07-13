@@ -45,32 +45,32 @@ namespace WebApi.Backend.Controllers
         // PUT: api/People/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson(int id, Person person)
-        {
-            if (id != person.Id)
-            {
-                return BadRequest();
-            }
+        //public async Task<IActionResult> PutPerson(int id, Person person)
+        //{
+        //    if (id != person.Id)
+        //    {
+        //        return BadRequest();
+        //    }
           
             
-            try
-            {
-                await _repository.Update(person) ;
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (! await _repository.Exist(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _repository.Update(person) ;
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (! await _repository.Exist(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/People
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -78,7 +78,7 @@ namespace WebApi.Backend.Controllers
         public async Task<ActionResult<Person>> PostPerson(Person person)
         {
            await _repository.Create(person);
-            return Ok(person);
+            return Ok("true");
           //  return CreatedAtAction("GetPerson", new { id = person.Id }, person);
         }
 

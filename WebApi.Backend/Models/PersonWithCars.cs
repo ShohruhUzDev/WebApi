@@ -8,6 +8,6 @@ namespace WebApi.Backend.Models
     public class PersonWithCars
     {
         public string  FullName { get; set; }
-        public string  CarName { get; set; }
+        public List<Car>  CarName { get; set; }
     }
 }

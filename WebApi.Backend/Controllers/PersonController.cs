@@ -13,34 +13,36 @@ namespace WebApi.Backend.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-        private IRepository<Person, int> _personService;
-
-        public PersonController(IRepository<Person, int> personService)
+       // private IRepository<Person, int> _personService;
+        private IPersonService _personService2;
+        //IRepository<Person, int> personService, 
+        public PersonController(IPersonService personService1)
         {
-            _personService = personService;
+          //  _personService = personService;
+            _personService2 = personService1;
         }
 
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var person = await _personService.GetById(id);
+            var person = await _personService2.Get(id);
             return Ok(person);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var persons =await _personService.GetAll();
+            var persons =await _personService2.GetAll();
             return Ok(persons);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetPersonWihCar(int id)
-        //{
-        //    var personwithcar = await _personService.GetPersonWithCar(id);
-        //    return Ok(personwithcar);
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPersonWihCar(int id)
+        {
+            var personwithcar = await _personService2.GetPersonWithCar(id);
+                return Ok(personwithcar);
+        }
 
 
 

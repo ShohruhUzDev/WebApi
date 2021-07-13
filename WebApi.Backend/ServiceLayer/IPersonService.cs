@@ -10,6 +10,6 @@ namespace WebApi.Backend.ServiceLayer
     {
         Task<Person> Get(int id);
        Task< IEnumerable<Person>> GetAll();
-      // Task< PersonWithCars> GetPersonWithCar(int id);
+       Task<IEnumerable< Car>> GetPersonWithCar(int id);
     }
 }
